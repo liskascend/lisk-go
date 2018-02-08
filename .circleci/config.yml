@@ -1,0 +1,49 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  prepare:
+        docker:
+          - image: circleci/golang:1.9.2
+        working_directory: /go/src/github.com/slamper/lisk-go
+        steps:
+          - checkout
+          - run: go get -u github.com/golang/dep/cmd/dep
+          - run: dep ensure
+          - persist_to_workspace:
+                    root: /go/src/github.com/slamper
+                    paths:
+                      - lisk-go
+
+  test:
+      docker:
+        - image: circleci/golang:1.9.2
+      working_directory: /go/src/github.com/slamper/lisk-go
+      steps:
+        - attach_workspace:
+            at: /go/src/github.com/slamper
+        - run: go test -v ./crypto/...
+        - run: go test -v ./transaction/...
+
+  lint:
+        docker:
+          - image: circleci/golang:1.9.2
+        working_directory: /go/src/github.com/slamper/lisk-go
+        steps:
+          - attach_workspace:
+              at: /go/src/github.com/slamper
+          - run: go get -u github.com/alecthomas/gometalinter
+          - run: gometalinter --install
+          - run: gometalinter --config=lint.json ./...
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - prepare
+      - lint:
+          requires:
+            - prepare
+      - test:
+          requires:
+            - prepare
