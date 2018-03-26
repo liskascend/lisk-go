@@ -1,7 +1,7 @@
 package transactions
 
 import (
-	"github.com/slamper/lisk-go/crypto"
+	"github.com/liskascend/lisk-go/crypto"
 )
 
 // NewTransaction creates a new value transfer transaction and signs it using the given secrets.

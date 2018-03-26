@@ -11,6 +11,9 @@ import (
 )
 
 type (
+	// emptyAsset is an asset placeholder required for json marshaling
+	emptyAsset struct{}
+
 	// DataAsset is an asset that is used to attach data to a normal transaction
 	DataAsset string
 
@@ -282,4 +285,13 @@ func (a DataAsset) IsValid() (bool, error) {
 		return false, errors.New("data length exceeds maximum payload size")
 	}
 	return true, nil
+}
+
+// MarshalJSON marshals the asset to the lisk JSON format
+func (a DataAsset) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Data string `json:"data"`
+	}{
+		Data: string(a),
+	})
 }

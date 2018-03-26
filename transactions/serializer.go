@@ -1,6 +1,7 @@
 package transactions
 
 import (
+	"bytes"
 	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
@@ -9,7 +10,7 @@ import (
 
 	"errors"
 
-	"github.com/slamper/lisk-go/crypto"
+	"github.com/liskascend/lisk-go/crypto"
 	"golang.org/x/crypto/ed25519"
 )
 
@@ -19,43 +20,37 @@ func (t *Transaction) Serialize() ([]byte, error) {
 		return nil, err
 	}
 
-	var dst []byte
+	// Create new buffer
+	dst := new(bytes.Buffer)
 
 	// First byte is the transaction type
-	transactionType := []byte{byte(t.Type)}
-	dst = append(dst, transactionType...)
+	binary.Write(dst, binary.LittleEndian, t.Type)
 
 	// Append the timestamp
-	transactionTimestamp := make([]byte, byteSizeTimestamp)
-	binary.LittleEndian.PutUint32(transactionTimestamp, t.Timestamp)
-	dst = append(dst, transactionTimestamp...)
+	binary.Write(dst, binary.LittleEndian, t.Timestamp)
 
 	// Append the sender's public key
 	transactionSenderPubKey := make([]byte, ed25519.PublicKeySize)
 	copy(transactionSenderPubKey, t.SenderPublicKey)
-	dst = append(dst, transactionSenderPubKey...)
+	binary.Write(dst, binary.LittleEndian, transactionSenderPubKey)
 
 	// Append the requester's public key if given
-	if t.TransactionRequesterPublicKey != nil && len(t.TransactionRequesterPublicKey) != 0 {
-		dst = append(dst, t.TransactionRequesterPublicKey...)
+	if len(t.TransactionRequesterPublicKey) > 0 {
+		binary.Write(dst, binary.LittleEndian, t.TransactionRequesterPublicKey)
 	}
 
 	// Append the recipientId
 	transactionRecipientID := make([]byte, byteSizeRecipientID)
-
 	if len(t.RecipientID) != 0 {
 		numericAddress := new(big.Int)
 		numericAddress.SetString(t.RecipientID[:len(t.RecipientID)-1], 10)
 		numericAddressBytes := numericAddress.Bytes()
 		copy(transactionRecipientID[cap(transactionRecipientID)-len(numericAddressBytes):], numericAddressBytes)
 	}
-
-	dst = append(dst, transactionRecipientID...)
+	binary.Write(dst, binary.LittleEndian, transactionRecipientID)
 
 	// Append the amount to be transferred
-	transactionAmount := make([]byte, byteSizeAmount)
-	binary.LittleEndian.PutUint64(transactionAmount, t.Amount)
-	dst = append(dst, transactionAmount...)
+	binary.Write(dst, binary.LittleEndian, t.Amount)
 
 	// Append asset data if given
 	if t.Asset != nil {
@@ -63,14 +58,18 @@ func (t *Transaction) Serialize() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-		dst = append(dst, transactionAssetData...)
+		binary.Write(dst, binary.LittleEndian, transactionAssetData)
 	}
 
 	// Append signatures (both optional)
-	dst = append(dst, t.signature...)
-	dst = append(dst, t.secondSignature...)
+	if len(t.signature) > 0 {
+		binary.Write(dst, binary.LittleEndian, t.signature)
+	}
+	if len(t.secondSignature) > 0 {
+		binary.Write(dst, binary.LittleEndian, t.secondSignature)
+	}
 
-	return dst, nil
+	return dst.Bytes(), nil
 }
 
 // IsValid returns whether the transaction is valid
@@ -149,7 +148,8 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	return json.Marshal(&serializableTransaction{
+	// Pack the transaction in the serializable format
+	preparedTransaction := &serializableTransaction{
 		Type:                          t.Type,
 		ID:                            id,
 		SenderID:                      crypto.GetAddressFromPublicKey(t.SenderPublicKey),
@@ -162,5 +162,12 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 		TransactionRequesterPublicKey: hex.EncodeToString(t.TransactionRequesterPublicKey),
 		Signature:                     hex.EncodeToString(t.signature),
 		SecondSignature:               hex.EncodeToString(t.secondSignature),
-	})
+	}
+
+	// Add an empty asset because it's required
+	if preparedTransaction.Asset == nil {
+		preparedTransaction.Asset = struct{}{}
+	}
+
+	return json.Marshal(preparedTransaction)
 }

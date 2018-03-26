@@ -22,11 +22,11 @@ type (
 		Type                          TransactionType `json:"type"`
 		ID                            string          `json:"id"`
 		SenderID                      string          `json:"senderId"`
-		Amount                        uint64          `json:"amount"`
-		Fee                           int             `json:"fee"`
+		Amount                        uint64          `json:"amount,string"`
+		Fee                           int             `json:"fee,string"`
 		RecipientID                   string          `json:"recipientId"`
 		Timestamp                     uint32          `json:"timestamp"`
-		Asset                         Asset           `json:"asset,omitempty"`
+		Asset                         interface{}     `json:"asset"`
 		SenderPublicKey               string          `json:"senderPublicKey"`
 		TransactionRequesterPublicKey string          `json:"transactionRequesterPublicKey,omitempty"`
 		Signature                     string          `json:"signature,omitempty"`

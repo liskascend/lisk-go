@@ -144,6 +144,13 @@ func TestDataAssetSerialize(t *testing.T) {
 	}
 }
 
+func TestDataAsset_MarshalJSON(t *testing.T) {
+	asset := DataAsset("abc")
+	if data, err := asset.MarshalJSON(); string(data) != `{"data":"abc"}` || err != nil {
+		t.Errorf("DataAsset.MarshalJSON()=%s,%v; want %v", data, err, "")
+	}
+}
+
 func TestRegisterSecondSignatureAssetSerialize(t *testing.T) {
 	asset := &RegisterSecondSignatureAsset{
 		PublicKey: defaultSenderPublicKey,
