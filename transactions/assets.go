@@ -11,9 +11,6 @@ import (
 )
 
 type (
-	// emptyAsset is an asset placeholder required for json marshaling
-	emptyAsset struct{}
-
 	// DataAsset is an asset that is used to attach data to a normal transaction
 	DataAsset string
 
