@@ -7,76 +7,121 @@ import (
 )
 
 type (
+	// DelegateRequest is the request body for a single Delegate request
 	DelegateRequest struct {
-		Address         string
-		PublicKey       string
+		// Address of the delegate
+		Address string
+		// PublicKey of the delegate
+		PublicKey string
+		// SecondPublicKey of the delegate
 		SecondPublicKey string
-		Username        string
-		Rank            string
+		// Username of the delegate
+		Username string
+		// Rank of the delegate
+		Rank string
 	}
 
+	// ForgingStatsRequest is the request body for a forgingStats request
 	ForgingStatsRequest struct {
+		// Address of the delegate
 		Address string
 
+		// FromTimestamp is the starting point of the stats
 		FromTimestamp int64
-		ToTimestamp   int64
+		// ToTimestamp is the ending point of the stats
+		ToTimestamp int64
 	}
 
+	// DelegatesRequest is the request body to request Delegates
 	DelegatesRequest struct {
-		Address         string
-		PublicKey       string
+		// Address of the delegate
+		Address string
+		// PublicKey of the delegate
+		PublicKey string
+		// SecondPublicKey of the delegate
 		SecondPublicKey string
-		Username        string
-		Rank            string
+		// Username of the delegate
+		Username string
+		// Rank of the delegate
+		Rank string
 
 		ListOptions
 	}
 
+	// DelegateResponse is the API response for single Delegate requests
 	DelegateResponse struct {
+		// Delegate is the resulting delegate
 		Delegate *Delegate `json:"data"`
 		*GenericResponse
 	}
 
+	// DelegatesResponse is the API response for Delegate requests
 	DelegatesResponse struct {
+		// Delegates are the results
 		Delegates []*Delegate `json:"data"`
 		*GenericResponse
 	}
 
+	// NextForgersResponse is the API response for the next forger request
 	NextForgersResponse struct {
+		// NextForgers are the results
 		NextForgers []*DelegateWithSlot `json:"data"`
 		*GenericResponse
 	}
 
+	// DelegateWithSlot is a delegate with its next forging slot
 	DelegateWithSlot struct {
-		Username  string `json:"username"`
+		// Username of the delegate
+		Username string `json:"username"`
+		// PublicKey of the delegate
 		PublicKey string `json:"publicKey"`
-		Address   string `json:"address"`
-		NextSlot  int    `json:"nextSlot"`
+		// Address of the delegate
+		Address string `json:"address"`
+		// NextSlot of the delegate
+		NextSlot int `json:"nextSlot"`
 	}
 
+	// Delegate is a delegate on the Lisk blockchain
 	Delegate struct {
-		Username       string   `json:"username"`
-		Vote           int64    `json:"vote,string"`
-		Rewards        int      `json:"rewards,string"`
-		ProducedBlocks int      `json:"producedBlocks"`
-		MissedBlocks   int      `json:"missedBlocks"`
-		Rate           int      `json:"rate"`
-		Approval       float64  `json:"approval"`
-		Productivity   float64  `json:"productivity"`
-		Rank           int      `json:"rank"`
-		Account        *Account `json:"account"`
+		// Username of the delegate
+		Username string `json:"username"`
+		// Vote amount of the delegate
+		Vote int64 `json:"vote,string"`
+		// Rewards of the delegate
+		Rewards int `json:"rewards,string"`
+		// ProducedBlocks is the number of blocks produced by the delegate
+		ProducedBlocks int `json:"producedBlocks"`
+		// MissedBlocks is the number of blocks missed by the delegate
+		MissedBlocks int `json:"missedBlocks"`
+		// Rate of the delegate
+		Rate int `json:"rate"`
+		// Approval percentage of the delegate
+		Approval float64 `json:"approval"`
+		// Productivity of the delegate
+		Productivity float64 `json:"productivity"`
+		// Rank of the delegate
+		Rank int `json:"rank"`
+		// Account of the delegate
+		Account *Account `json:"account"`
 	}
 
+	// ForgingStatsResponse is the API response for forgingStats requests
 	ForgingStatsResponse struct {
+		// Stats is the result
 		Stats ForgingStats `json:"data"`
 		*GenericResponse
 	}
 
+	// ForgingStats are the forgingStats of a delegate
 	ForgingStats struct {
-		Fees    string `json:"fees"`
+		// Fees forged by the delegate
+		Fees string `json:"fees"`
+		// Rewards forged by the delegate
 		Rewards string `json:"rewards"`
-		Forged  string `json:"forged"`
-		Count   string `json:"count"`
+		// Forged is the total amount forged by the delegate
+		Forged string `json:"forged"`
+		// Count of blocks forged
+		Count string `json:"count"`
 	}
 )
 
@@ -125,10 +170,10 @@ func (c *Client) GetDelegate(ctx context.Context, options *DelegateRequest) (*De
 
 }
 
-// GetDelegates fuzzy searches for Delegates by username.
+// SearchDelegates fuzzy searches for Delegates by username.
 // Limit is set to 100 by default
 // The Account field of the delegate response does not contain a username. Use the delegate username instead
-func (c *Client) SearchDelegate(ctx context.Context, username string, listOptions *ListOptions) (*DelegatesResponse, error) {
+func (c *Client) SearchDelegates(ctx context.Context, username string, listOptions *ListOptions) (*DelegatesResponse, error) {
 	req := c.restClient.R().SetContext(ctx)
 
 	if username != "" {

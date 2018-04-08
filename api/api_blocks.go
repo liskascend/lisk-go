@@ -6,36 +6,59 @@ import (
 )
 
 type (
+	// BlockRequest is the request body to request blocks
 	BlockRequest struct {
-		BlockID            string
-		Height             *int64
+		// BlockID of the block
+		BlockID string
+		// Height if the block
+		Height *int64
+		// GeneratorPublicKey is the public key of the delegate that forged the block
 		GeneratorPublicKey string
 
 		ListOptions
 	}
 
+	// BlockResponse is the API response for block requests
 	BlockResponse struct {
+		// Blocks are the results
 		Blocks []*Block `json:"data"`
 		*GenericResponse
 	}
 
+	// Block is a Lisk block
 	Block struct {
-		ID                   string `json:"id"`
-		Version              int    `json:"version"`
-		Height               int    `json:"height"`
-		Timestamp            int    `json:"timestamp"`
-		GeneratorAddress     string `json:"generatorAddress"`
-		GeneratorPublicKey   string `json:"generatorPublicKey"`
-		optionsLength        int    `json:"optionsLength"`
-		optionsHash          string `json:"optionsHash"`
-		BlockSignature       string `json:"blockSignature"`
-		Confirmations        int    `json:"confirmations"`
-		PreviousBlockID      string `json:"previousBlockId"`
-		NumberOfTransactions int    `json:"numberOfTransactions"`
-		TotalAmount          string `json:"totalAmount"`
-		TotalFee             string `json:"totalFee"`
-		Reward               string `json:"reward"`
-		TotalForged          string `json:"totalForged"`
+		// ID of the block
+		ID string `json:"id"`
+		// Version of the block
+		Version int `json:"version"`
+		// Height of the block
+		Height int `json:"height"`
+		// Timestamp of the block
+		Timestamp int `json:"timestamp"`
+		// GeneratorAddress of the block
+		GeneratorAddress string `json:"generatorAddress"`
+		// GeneratorPublicKey of the block
+		GeneratorPublicKey string `json:"generatorPublicKey"`
+		// OptionsLength of the block
+		OptionsLength int `json:"optionsLength"`
+		// OptionsHash of the block
+		OptionsHash string `json:"optionsHash"`
+		// BlockSignature of the block
+		BlockSignature string `json:"blockSignature"`
+		// Confirmations of the block
+		Confirmations int `json:"confirmations"`
+		// PreviousBlockID of the block
+		PreviousBlockID string `json:"previousBlockId"`
+		// NumberOfTransactions of the block
+		NumberOfTransactions int `json:"numberOfTransactions"`
+		// TotalAmount of the block
+		TotalAmount string `json:"totalAmount"`
+		// TotalFee of the block
+		TotalFee string `json:"totalFee"`
+		// Reward of the block
+		Reward string `json:"reward"`
+		// TotalForged of the block
+		TotalForged string `json:"totalForged"`
 	}
 )
 

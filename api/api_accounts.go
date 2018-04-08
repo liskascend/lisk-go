@@ -6,27 +6,41 @@ import (
 )
 
 type (
+	// AccountRequest is the request body to request accounts
 	AccountRequest struct {
-		Address         string
-		PublicKey       string
+		// Address of the account
+		Address string
+		// PublicKey of the account
+		PublicKey string
+		// SecondPublicKey of the account
 		SecondPublicKey string
-		Username        string
+		// Username of the account
+		Username string
 
 		ListOptions
 	}
 
+	// AccountResponse is the API response for account requests
 	AccountResponse struct {
+		// Accounts are the results
 		Accounts []*Account `json:"data"`
 		*GenericResponse
 	}
 
+	// Account is an account on the Lisk blockchain
 	Account struct {
-		Address            string    `json:"address"`
-		PublicKey          string    `json:"publicKey"`
-		Balance            int64     `json:"balance,string"`
-		UnconfirmedBalance int64     `json:"unconfirmedBalance,string"`
-		SecondPublicKey    string    `json:"secondPublicKey"`
-		Delegate           *Delegate `json:"delegate,omitempty"`
+		// Address of the account
+		Address string `json:"address"`
+		// PublicKey of the account
+		PublicKey string `json:"publicKey"`
+		// Balance of the account
+		Balance int64 `json:"balance,string"`
+		// UnconfirmedBalance of the account
+		UnconfirmedBalance int64 `json:"unconfirmedBalance,string"`
+		// SecondPublicKey of the account
+		SecondPublicKey string `json:"secondPublicKey"`
+		// Delegate is the delegate name of the account
+		Delegate *Delegate `json:"delegate,omitempty"`
 	}
 )
 

@@ -6,34 +6,55 @@ import (
 )
 
 type (
+	// PeerRequest is the request body for a peer request
 	PeerRequest struct {
-		IP        string
-		HttpPort  *int
-		WSPort    *int
-		OS        string
-		Version   string
-		State     *int
-		Height    *int64
+		// IP of the peer
+		IP string
+		// HTTPPort of the peer
+		HTTPPort *int
+		// WSPort of the peer
+		WSPort *int
+		// OS of the peer
+		OS string
+		// Version of the peer
+		Version string
+		// State of the peer
+		State *int
+		// Height of the peer
+		Height *int64
+		// Broadhash of the peer
 		Broadhash string
 
 		ListOptions
 	}
 
+	// PeerResponse is the API response for peer requests
 	PeerResponse struct {
+		// Peers are the results
 		Peers []*Peer `json:"data"`
 		*GenericResponse
 	}
 
+	// Peer is a peer the node is connected to
 	Peer struct {
-		IP        string `json:"ip"`
-		HTTPPort  int    `json:"httpPort"`
-		WsPort    int    `json:"wsPort"`
-		Os        string `json:"os"`
-		Version   string `json:"version"`
-		State     int    `json:"state"`
-		Height    int64  `json:"height"`
+		// IP of the peer
+		IP string `json:"ip"`
+		// HTTPPort of the peer
+		HTTPPort int `json:"httpPort"`
+		// WSPort of the peer
+		WSPort int `json:"wsPort"`
+		// OS of the peer
+		OS string `json:"os"`
+		// Version of the peer
+		Version string `json:"version"`
+		// State of the peer
+		State int `json:"state"`
+		// Height of the peer
+		Height int64 `json:"height"`
+		// Broadhash of the peer
 		Broadhash string `json:"broadhash"`
-		Nonce     string `json:"nonce"`
+		// Nonce of the peer
+		Nonce string `json:"nonce"`
 	}
 )
 
@@ -47,8 +68,8 @@ func (c *Client) GetPeers(ctx context.Context, options *PeerRequest) (*PeerRespo
 		if options.IP != "" {
 			req.SetQueryParam("ip", options.IP)
 		}
-		if options.HttpPort != nil {
-			req.SetQueryParam("httpPort", strconv.Itoa(*options.HttpPort))
+		if options.HTTPPort != nil {
+			req.SetQueryParam("httpPort", strconv.Itoa(*options.HTTPPort))
 		}
 		if options.WSPort != nil {
 			req.SetQueryParam("wsPort", strconv.Itoa(*options.WSPort))

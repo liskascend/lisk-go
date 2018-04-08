@@ -8,28 +8,46 @@ import (
 )
 
 type (
+	// TransactionRequest is the request body for a transaction request
 	TransactionRequest struct {
-		ID                 string
-		RecipientID        string
+		// ID of the transaction
+		ID string
+		// RecipientID of the transaction
+		RecipientID string
+		// RecipientPublicKey of the transaction
 		RecipientPublicKey string
-		SenderID           string
-		SenderPublicKey    string
-		BlockID            string
-		Type               *int
-		Height             *int64
-		MinAmount          *int64
-		MaxAmount          *int64
+		// SenderID of the transaction
+		SenderID string
+		// SenderPublicKey of the transaction
+		SenderPublicKey string
+		// BlockID of the transaction
+		BlockID string
+		// Type of the transaction
+		Type *int
+		// Height of the transaction
+		Height *int64
+		// MinAmount of the transaction
+		MinAmount *int64
+		// MaxAmount of the transaction
+		MaxAmount *int64
 
+		// FromTimestamp only returns transactions after this time
 		FromTimestamp int64
-		ToTimestamp   int64
+		// ToTimestamp only returns transactions before this time
+		ToTimestamp int64
 		ListOptions
 	}
 
+	// TransactionsResponse is the API response for transaction requests
 	TransactionsResponse struct {
+		// Transactions are the results
 		Transactions []*Transaction `json:"data"`
 		*GenericResponse
 	}
+
+	// TransactionSendResponse is the API response for transaction send requests
 	TransactionSendResponse struct {
+		// Result is the result status
 		Result struct {
 			Message string `json:"message"`
 		} `json:"data"`

@@ -6,27 +6,41 @@ import (
 )
 
 type (
+	// DappRequest is the request body to request Dapps
 	DappRequest struct {
+		// TransactionID is the transactionID of the Dapp creation
 		TransactionID string
-		Name          string
+		// Name is the name of the Dapp
+		Name string
 
 		ListOptions
 	}
 
+	// DappResponse is the API response for Dapp requests
 	DappResponse struct {
+		// Dapps are the results
 		Dapps []*Dapp `json:"data"`
 		*GenericResponse
 	}
 
+	// Dapp is a Lisk Dapp
 	Dapp struct {
+		// TransactionID is the transactionID of the Dapp creation
 		TransactionID string `json:"transactionId"`
-		Icon          string `json:"icon"`
-		Category      int    `json:"category"`
-		Type          int    `json:"type"`
-		Link          string `json:"link"`
-		Tags          string `json:"tags"`
-		Description   string `json:"description"`
-		Name          string `json:"name"`
+		// Icon is the icon of the Dapp
+		Icon string `json:"icon"`
+		// Category is the category of the Dapp
+		Category int `json:"category"`
+		// Type is the type of the Dapp
+		Type int `json:"type"`
+		// Link is the link to the Dapp
+		Link string `json:"link"`
+		// Tags are the tags of the Dapp
+		Tags string `json:"tags"`
+		// Description is the description of the Dapp
+		Description string `json:"description"`
+		// Name is the name of the Dapp
+		Name string `json:"name"`
 	}
 )
 

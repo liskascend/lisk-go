@@ -7,6 +7,7 @@ import (
 )
 
 type (
+	// SignatureSendResponse is the API response for signature requests
 	SignatureSendResponse struct {
 		Result struct {
 			Message string `json:"message"`

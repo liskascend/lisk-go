@@ -6,54 +6,87 @@ import (
 )
 
 type (
+	// DelegateVoterRequest is the request body for a delegate voter request
 	DelegateVoterRequest VoterRequest
 
+	// VoterRequest is the request body for a voter request
 	VoterRequest struct {
-		Address         string
-		PublicKey       string
+		// Address of the voter
+		Address string
+		// PublicKey of the voter
+		PublicKey string
+		// SecondPublicKey of the voter
 		SecondPublicKey string
-		Username        string
+		// Username of the voter
+		Username string
 
 		ListOptions
 	}
 
+	// DelegateVoterResponse is the API response for delegate voter requests
 	DelegateVoterResponse struct {
+		// DelegateWithVoters is the result
 		DelegateWithVoters DelegateWithVoters `json:"data"`
 		*GenericResponse
 	}
 
+	// DelegateWithVoters is a delegate with information on its voters
 	DelegateWithVoters struct {
-		Username  string   `json:"username"`
-		PublicKey string   `json:"publicKey,omitempty"`
-		Votes     int32    `json:"votes"`
-		Address   string   `json:"address"`
-		Balance   string   `json:"balance"`
-		Voters    []*Voter `json:"voters"`
+		// Username of the delegate
+		Username string `json:"username"`
+		// PublicKey of the delegate
+		PublicKey string `json:"publicKey,omitempty"`
+		// Username of the delegate
+		Votes int32 `json:"votes"`
+		// Address of the delegate
+		Address string `json:"address"`
+		// Balance of the delegate
+		Balance string `json:"balance"`
+		// Voters of the delegate
+		Voters []*Voter `json:"voters"`
 	}
 
+	// Voter is the detail information for a voter
 	Voter struct {
-		Address   string `json:"address"`
+		// Address of the voter
+		Address string `json:"address"`
+		// PublicKey of the voter
 		PublicKey string `json:"publicKey"`
-		Balance   int64  `json:"balance"`
+		// Balance of the voter
+		Balance int64 `json:"balance"`
 	}
 
+	// VotesResponse is the API response for voter requests
 	VotesResponse struct {
+		// VoteData is the result
 		VoteData VotesData
 		*GenericResponse
 	}
 
+	// VotesData is detailed information on a users votes
 	VotesData struct {
-		Address        string `json:"address"`
-		Balance        int64  `json:"balance"`
-		Username       string `json:"username"`
-		PublicKey      string `json:"publicKey"`
-		VotesUsed      int    `json:"votesUsed"`
-		VotesAvailable int    `json:"votesAvailable"`
+		// Address of the voter
+		Address string `json:"address"`
+		// Balance of the voter
+		Balance int64 `json:"balance"`
+		// Username of the voter
+		Username string `json:"username"`
+		// PublicKey of the voter
+		PublicKey string `json:"publicKey"`
+		// VotesUsed is the number of votes used
+		VotesUsed int `json:"votesUsed"`
+		// VotesAvailable is the number of votes available
+		VotesAvailable int `json:"votesAvailable"`
+		// Votes are the votes of the voter
 		Votes []struct {
-			Address   string `json:"address"`
+			// Address of the delegate
+			Address string `json:"address"`
+			// PublicKey of the delegate
 			PublicKey string `json:"publicKey"`
-			Balance   int64  `json:"balance"`
-			Username  string `json:"username"`
+			// Balance of the delegate
+			Balance int64 `json:"balance"`
+			// Username of the delegate
+			Username string `json:"username"`
 		} `json:"votes"`
 	}
 )
