@@ -5,7 +5,7 @@ version: 2
 jobs:
   prepare:
         docker:
-          - image: circleci/golang:1.9.2
+          - image: circleci/golang:latest
         working_directory: /go/src/github.com/liskascend/lisk-go
         steps:
           - checkout
@@ -18,7 +18,7 @@ jobs:
 
   test:
       docker:
-        - image: circleci/golang:1.9.2
+        - image: circleci/golang:latest
       working_directory: /go/src/github.com/liskascend/lisk-go
       steps:
         - attach_workspace:
@@ -28,7 +28,7 @@ jobs:
 
   lint:
         docker:
-          - image: circleci/golang:1.9.2
+          - image: circleci/golang:latest
         working_directory: /go/src/github.com/liskascend/lisk-go
         steps:
           - attach_workspace:
