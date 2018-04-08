@@ -64,15 +64,17 @@ This is the equivalent but done manually:
 // Create the client
 client := api.NewClient()
 
-timestamp := GetCurrentTimeWithOffset(timeOffset)
+timestamp := GetCurrentTimeWithOffset(0)
 
 transaction := &Transaction{
 	Type:        TransactionTypeNormal,
-	Amount:      amount,
-	RecipientID: recipientID,
+	Amount:      0,
+	RecipientID: "104666L",
 	Timestamp:   timestamp,
 	Asset:       transactions.DataAsset("abc"),
 }
+
+secret := "wagon stock borrow episode laundry kitten salute link globe zero feed marble"
 
 pubKey := crypto.GetPublicKeyFromSecret(secret)
 transaction.SenderPublicKey = pubKey
