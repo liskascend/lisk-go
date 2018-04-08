@@ -15,9 +15,7 @@ func SignMessageWithPrivateKey(message string, privKey []byte) []byte {
 
 // SignDataWithPrivateKey takes data and a privateKey and returns a signature
 func SignDataWithPrivateKey(data []byte, privKey []byte) []byte {
-	rawMessage := []byte(data)
-
-	signedMessage := ed25519.Sign(ed25519.PrivateKey(privKey), rawMessage)
+	signedMessage := ed25519.Sign(ed25519.PrivateKey(privKey), data)
 
 	return signedMessage
 }
@@ -28,7 +26,7 @@ func VerifyMessageWithPublicKey(message string, signature []byte, publicKey []by
 	return isValid, nil
 }
 
-// VerifyMessageWithPublicKey takes data, a signature and a publicKey and verifies it
+// VerifyDataWithPublicKey takes data, a signature and a publicKey and verifies it
 func VerifyDataWithPublicKey(data []byte, signature []byte, publicKey []byte) (bool, error) {
 	isValid := ed25519.Verify(ed25519.PublicKey(publicKey), data, signature)
 	return isValid, nil
