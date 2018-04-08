@@ -283,3 +283,12 @@ func (a DataAsset) IsValid() (bool, error) {
 	}
 	return true, nil
 }
+
+// MarshalJSON marshals the asset to the lisk JSON format
+func (a DataAsset) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Data string `json:"data"`
+	}{
+		Data: string(a),
+	})
+}

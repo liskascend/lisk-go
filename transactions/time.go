@@ -5,7 +5,8 @@ import (
 	"time"
 )
 
-func getCurrentTimeWithOffset(offset int64) uint32 {
+// GetCurrentTimeWithOffset returns the current blockchain time with an offset
+func GetCurrentTimeWithOffset(offset int64) uint32 {
 	return getTimeWithOffset(time.Now().UTC().UnixNano()/int64(time.Millisecond), offset)
 }
 

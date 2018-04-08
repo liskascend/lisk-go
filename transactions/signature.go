@@ -1,9 +1,7 @@
 package transactions
 
 import (
-	"encoding/base64"
-
-	"github.com/slamper/lisk-go/crypto"
+	"github.com/liskascend/lisk-go/crypto"
 )
 
 // Sign signs the transaction with the given privateKey.
@@ -14,8 +12,7 @@ func (t *Transaction) Sign(privateKey []byte) error {
 		return err
 	}
 
-	signature := crypto.SignMessageWithPrivateKey(string(hash), privateKey)
-	t.signature, _ = base64.StdEncoding.DecodeString(signature)
+	t.signature = crypto.SignMessageWithPrivateKey(string(hash), privateKey)
 
 	return nil
 }
@@ -28,8 +25,7 @@ func (t *Transaction) SecondSign(privateKey []byte) error {
 		return err
 	}
 
-	signature := crypto.SignMessageWithPrivateKey(string(hash), privateKey)
-	t.secondSignature, _ = base64.StdEncoding.DecodeString(signature)
+	t.secondSignature = crypto.SignMessageWithPrivateKey(string(hash), privateKey)
 
 	return nil
 }

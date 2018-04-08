@@ -191,7 +191,7 @@ func TestSerializeTransactionType3(t *testing.T) {
 	}
 
 	if val, err := transaction.Serialize(); base64.StdEncoding.EncodeToString(val) != "A6opAgBdA2qFjOifhESRdi64niv71QpKCg2mWOSyYoslsReuCQDOvKqNNBU9AAAAAAAAAAArNWQwMzZhODU4Y2U4OWY4NDQ0OTE3NjJlYjg5ZTJiZmJkNTBhNGEwYTBkYTY1OGU0YjI2MjhiMjViMTE3YWUwOSswNDAxYzhhYzlmMjlkZWQ5ZTFlNGQ1YjZiNDMwNTFjYjI1YjIyZjI3YzdiN2IzNTA5MjE2MWU4NTE5NDZmODJmYYpUl1IS6tk9+MiBZVxiVUS86O18zf5vCKQu7Psa3r0FEwe+UBS7BRYXuveBXVD2ISnnCRgZA2Hl1N1HllQbCg==" || err != nil {
-		t.Errorf("Transaction.Serialize() returns wrong data: %v; error: %v", base64.StdEncoding.EncodeToString(val), err)
+		t.Errorf("Transaction.Serialize() returns wrong data: %v; error: %v", val, err)
 	}
 }
 
@@ -210,7 +210,7 @@ func TestSerializeTransactionType4(t *testing.T) {
 	}
 
 	if val, err := transaction.Serialize(); base64.StdEncoding.EncodeToString(val) != "BKopAgBdA2qFjOifhESRdi64niv71QpKCg2mWOSyYoslsReuCQAAAAAAAAAAAAAAAAAAAAACBSs1ZDAzNmE4NThjZTg5Zjg0NDQ5MTc2MmViODllMmJmYmQ1MGE0YTBhMGRhNjU4ZTRiMjYyOGIyNWIxMTdhZTA5KzA0MDFjOGFjOWYyOWRlZDllMWU0ZDViNmI0MzA1MWNiMjViMjJmMjdjN2I3YjM1MDkyMTYxZTg1MTk0NmY4MmZhilSXUhLq2T34yIFlXGJVRLzo7XzN/m8IpC7s+xrevQUTB75QFLsFFhe694FdUPYhKecJGBkDYeXU3UeWVBsK" || err != nil {
-		t.Errorf("Transaction.Serialize() returns wrong data: %v; error: %v", base64.StdEncoding.EncodeToString(val), err)
+		t.Errorf("Transaction.Serialize() returns wrong data: %v; error: %v", val, err)
 	}
 }
 
@@ -224,7 +224,7 @@ func TestMarshalTransaction(t *testing.T) {
 		signature:       defaultSignature,
 	}
 
-	if val, err := transaction.MarshalJSON(); string(val) != "{\"type\":0,\"id\":\"13987348420913138422\",\"senderId\":\"18160565574430594874L\",\"amount\":1000,\"fee\":10000000,\"recipientId\":\"58191285901858109L\",\"timestamp\":141738,\"senderPublicKey\":\"5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09\",\"signature\":\"618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a\"}" || err != nil {
+	if val, err := transaction.MarshalJSON(); string(val) != "{\"type\":0,\"id\":\"13987348420913138422\",\"senderId\":\"18160565574430594874L\",\"amount\":\"1000\",\"fee\":\"10000000\",\"recipientId\":\"58191285901858109L\",\"timestamp\":141738,\"asset\":{},\"senderPublicKey\":\"5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09\",\"signature\":\"618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a\"}" || err != nil {
 		t.Errorf("Transaction.MarshalJSON() returns wrong data: %s; error: %v", val, err)
 	}
 }

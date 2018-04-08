@@ -15,9 +15,9 @@ const (
 	feeMultisignature = 5 * fixedPoint
 	feeDapp           = 25 * fixedPoint
 
-	byteSizeTimestamp                  = 4
-	byteSizeRecipientID                = 8
-	byteSizeAmount                     = 8
+	//byteSizeTimestamp                  = 4
+	byteSizeRecipientID = 8
+	//byteSizeAmount                     = 8
 	byteSizeSignatureTransaction       = 64
 	byteSizeSecondSignatureTransaction = 64
 	byteSizeData                       = 64

@@ -5,7 +5,7 @@ import (
 	"crypto/sha256"
 	"errors"
 
-	"github.com/slamper/lisk-go/crypto"
+	"github.com/liskascend/lisk-go/crypto"
 )
 
 // Hash returns the SHA256 hash of the transaction bytes

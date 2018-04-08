@@ -33,7 +33,7 @@ func TestGetCurrentTimeWithOffset(t *testing.T) {
 	patch := monkey.Patch(time.Now, func() time.Time { return defaultTime })
 	defer patch.Unpatch()
 
-	if val := getCurrentTimeWithOffset(int64(0)); val != defaultEpochTime {
+	if val := GetCurrentTimeWithOffset(int64(0)); val != defaultEpochTime {
 		t.Errorf("GetCurrentTimeWithOffset(%v)=%v; want %v", defaultTime, val, defaultEpochTime)
 	}
 }
