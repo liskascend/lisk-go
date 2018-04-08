@@ -10,6 +10,8 @@ Currently this library is in **Beta** and the API will experience changes.
 
 Transaction and Crypto code have >95% test coverage and are extensively tested.
 
+---
+
 Features:
 - [X] Support for the latest 1.0 Lisk API
 - [X] 100% coverage of the API functions
