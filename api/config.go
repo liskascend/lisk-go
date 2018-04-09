@@ -35,7 +35,7 @@ var (
 	DefaultConfig = &Config{
 		RandomHostsPool: []Host{{"betanet.lisk.io", 5000, false}},
 		RandomHost:      true,
-		Debug:           true,
+		Debug:           false,
 	}
 )
 
