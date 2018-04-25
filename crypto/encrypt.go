@@ -17,7 +17,7 @@ func EncryptPassphraseWithPassword(passphrase, password string) (result, tag, iv
 	iv = make([]byte, 16)
 	rand.Read(iv)
 	salt = make([]byte, 16)
-	rand.Read(iv)
+	rand.Read(salt)
 
 	key := getKeyFromPassword(password, salt)
 	aesBlock, err := aes.NewCipher(key)
